@@ -1,12 +1,12 @@
-name: Daily News to Slack
+name: Daily News from News in Levels
 
 on:
   schedule:
-    - cron: '0 9 * * *'   # 毎日9:00(JSTなら0:00に調整が必要)
-  workflow_dispatch:       # 手動実行も可能
+    - cron: '0 9 * * *'   # 毎日 09:00 UTC または日本時間にしたい時間に調整
+  workflow_dispatch:
 
 jobs:
-  notify:
+  send_news:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -15,7 +15,7 @@ jobs:
         with:
           python-version: '3.10'
       - name: Install dependencies
-        run: pip install requests beautifulsoup4
+        run: pip install -r requirements.txt
       - name: Run script
         run: python news.py
         env:
